@@ -67,6 +67,14 @@ class CheckoutController extends GetxController {
                             paymentMethod: PaymentMethods.paypal,
                           ),
                         );
+                      case PaymentMethods.midtrans:
+                        return TPaymentTile(
+                          paymentMethodModel: PaymentMethodModel(
+                            name: "Midtrans",
+                            image: TImages.creditCard,
+                            paymentMethod: PaymentMethods.midtrans,
+                          ),
+                        );
                     }
                   }),
                   const SizedBox(height: TSizes.spaceBtwSections),

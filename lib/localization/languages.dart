@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import 'Languages/english.dart';
 import 'Languages/french.dart';
+import 'Languages/indonesia.dart';
 import 'Languages/russian.dart';
 import 'Languages/german.dart';
 import 'Languages/portuguese.dart';
@@ -20,5 +21,6 @@ class Languages extends Translations {
     'pt_BR': PortugueseBR.language,
     'vi': Vietnamese.language,
     'es': Spanish.language,
+    'id_ID': Indonesian.language,
   };
 }

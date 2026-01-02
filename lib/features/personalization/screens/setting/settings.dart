@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:tstore_ecommerce_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:tstore_ecommerce_app/utils/constants/text_strings.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
@@ -23,6 +24,8 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = UserController.instance;
+    final authRepo = AuthenticationRepository.instance;
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -80,6 +83,12 @@ class SettingsScreen extends StatelessWidget {
                       onTap: () => Get.toNamed(TRoutes.order),
                     ),
                     TSettingsMenuTile(
+                      icon: Iconsax.refresh_circle,
+                      title: TTexts.returnRequest.tr,
+                      subTitle: TTexts.requestsSubTitle.tr,
+                      onTap: () => Get.toNamed(TRoutes.returnRequest),
+                    ),
+                    TSettingsMenuTile(
                         icon: Iconsax.bank, title: TTexts.bankAccount.tr, subTitle:TTexts.bankAccountSubTitle.tr),
                     TSettingsMenuTile(
                       icon: Iconsax.discount_shape,
@@ -92,6 +101,7 @@ class SettingsScreen extends StatelessWidget {
                       icon: Icons.language,
                       onTap: () => Get.toNamed(TRoutes.language),
                       subTitle: '',
+                      guestMode: false,
                     ),
                     TSettingsMenuTile(
                       icon: Iconsax.notification,
@@ -118,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
                       icon: Iconsax.support,
                       title: TTexts.chat.tr,
                       subTitle: TTexts.chatSubTitle.tr,
-                      onTap: () => Get.toNamed(TRoutes.chatList),
+                      onTap: () => Get.toNamed(TRoutes.whatsappSupport),
                     ),
                     TSettingsMenuTile(
                       icon: Iconsax.location,
@@ -140,11 +150,15 @@ class SettingsScreen extends StatelessWidget {
                     ),
 
                     /// -- Logout Button
-                    const SizedBox(height: TSizes.spaceBtwSections),
-                    SizedBox(
-                        width: double.infinity,
-                        child: OutlinedButton(onPressed: () => controller.logout(), child: Text(TTexts.logout.tr))),
-                    const SizedBox(height: TSizes.spaceBtwSections * 2.5),
+                    authRepo.isGuestUser ? const SizedBox(height: TSizes.spaceBtwSections * 2.5) :const SizedBox(height: TSizes.spaceBtwSections),
+
+                    /// -- Logout Button
+                    if(!authRepo.isGuestUser)...[
+                      SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton(onPressed: () => controller.logout(), child: Text(TTexts.logout.tr))),
+                      const SizedBox(height: TSizes.spaceBtwSections * 2.5),
+                    ]
                   ],
                 ),
               ),

@@ -26,60 +26,73 @@ class NotificationDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: TAppBar(
-        title: const Text('Notification'),
-        showSkipButton: false,
-        showActions: false,
+        title: const Text('Notification Details'),
         showBackArrow: true,
-        leadingOnPressed: () => Get.offNamed(TRoutes.notification),
+        showActions: false,
+        showSkipButton: false,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(TSizes.defaultSpace),
-        child: Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          child: Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          return TContainer(
-            backgroundColor: dark ? TColors.dark : TColors.light,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (controller.selectedNotification.value.type.isNotEmpty)
-                  TContainer(
-                    padding: const EdgeInsets.symmetric(vertical: TSizes.sm, horizontal: TSizes.sm),
-                    backgroundColor: TColors.primary,
-                    child: Text(controller.selectedNotification.value.type,
-                        style: Theme.of(context).textTheme.labelMedium!.apply(color: Colors.black)),
-                  ),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Text('Title', style: Theme.of(context).textTheme.labelMedium),
-                Text(controller.selectedNotification.value.title,
-                    style: Theme.of(context).textTheme.titleMedium!.apply(color: dark ? Colors.white : Colors.blue)),
-                const SizedBox(height: TSizes.spaceBtwItems),
-                Text('Message', style: Theme.of(context).textTheme.labelMedium),
-                Text(controller.selectedNotification.value.body, style: Theme.of(context).textTheme.bodyMedium),
-                const SizedBox(height: TSizes.spaceBtwSections),
-
-                // Notification Click event
-                if (controller.selectedNotification.value.route.isNotEmpty &&
-                    controller.selectedNotification.value.route != TRoutes.notification &&
-                    controller.selectedNotification.value.route != TRoutes.notificationDetails)
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () => Get.toNamed(
-                        controller.selectedNotification.value.route,
-                        parameters: {'id': controller.selectedNotification.value.routeId},
-                      ),
-                      label: const Text('Redirect'),
-                      icon: const Icon(Iconsax.arrow_right),
+            return TContainer(
+              padding: const EdgeInsets.all(TSizes.md),
+              backgroundColor: dark ? TColors.darkerGrey : TColors.light,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Notification Type Chip
+                  if (controller.selectedNotification.value.type.isNotEmpty)
+                    Chip(
+                      label: Text(controller.selectedNotification.value.type),
+                      backgroundColor: TColors.primary.withValues(alpha: 0.2),
+                      labelStyle: const TextStyle(color: TColors.primary),
+                      side: BorderSide.none,
+                      padding: const EdgeInsets.symmetric(horizontal: TSizes.sm, vertical: TSizes.xs),
                     ),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+
+                  // Title
+                  Text(
+                    controller.selectedNotification.value.title,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                const SizedBox(height: TSizes.spaceBtwSections),
-              ],
-            ),
-          );
-        }),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+                  const Divider(),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+
+                  // Body
+                  Text(
+                    controller.selectedNotification.value.body,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textAlign: TextAlign.justify,
+                  ),
+                  const SizedBox(height: TSizes.spaceBtwSections * 2),
+
+                  // Redirect Button
+                  if (controller.selectedNotification.value.route.isNotEmpty &&
+                      controller.selectedNotification.value.route != TRoutes.notification &&
+                      controller.selectedNotification.value.route != TRoutes.notificationDetails)
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Iconsax.arrow_right),
+                        onPressed: () => Get.toNamed(
+                          controller.selectedNotification.value.route,
+                          parameters: {'id': controller.selectedNotification.value.routeId},
+                        ),
+                        label: const Text('View Details'),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

@@ -11,8 +11,8 @@ plugins {
 
 android {
     namespace = "com.codingwitht.ecommerce.tstore_ecommerce_app"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = "28.1.13356709"
+    compileSdk = 36
+    ndkVersion = "28.0.12674087"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -29,7 +29,7 @@ android {
         applicationId = "com.codingwitht.ecommerce.tstore_ecommerce_app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion.toInt()
+        minSdk = 23
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -50,4 +50,14 @@ dependencies {
 
 flutter {
     source = "../.."
+}
+// FORCE COMPATIBLE VERSIONS (Kotlin DSL)
+configurations.all {
+    resolutionStrategy {
+        force("androidx.core:core-ktx:1.15.0")
+        force("androidx.core:core:1.15.0")
+
+        // ADD THIS LINE TO FIX MIDTRANS CRASH
+        force("com.google.code.gson:gson:2.9.0")
+    }
 }

@@ -37,7 +37,7 @@ class THomeAppBar extends StatelessWidget {
                 // Check if there are no record found
                 if (userController.user.value.id.isEmpty) {
                   // Display a message when no data is found
-                  return Text('Your Name', style: Theme.of(context).textTheme.headlineSmall!.apply(color: TColors.white));
+                  return Text('Welcome to ${TTexts.appName.tr}', style: Theme.of(context).textTheme.headlineSmall!.apply(color: TColors.white));
                 } else {
                   // Display User Name
                   return Text(

@@ -8,6 +8,8 @@ class TTexts {
   static const String vietnamese = 'Vietnamese';
   static const String spanish = 'spanish';
   static const String russian = 'russian';
+  static const String indonesian = 'Indonesian';
+
 
   //Welcome Screen
   static const String welcomeToStore = "welcomeToStore";
@@ -113,6 +115,7 @@ class TTexts {
   static const String cartSubTitle = "cartSubTitle";
   static const String myOrders = "myOrders";
   static const String ordersSubTitle = "ordersSubTitle";
+  static const String requestsSubTitle = "requestsSubTitle";
   static const String bankAccount = "bankAccount";
   static const String bankAccountSubTitle = "bankAccountSubTitle";
   static const String myCoupons = "myCoupons";
@@ -188,6 +191,12 @@ class TTexts {
   static const String total = "total";
   static const String paymentMethod = "paymentMethod";
   static const String cashOnDelivery = "cashOnDelivery";
+  static const String returnAndExchange = 'returnAndExchange';
+  static const String returnRequest = 'returnRequest';
+  static const String requestedDate = 'requestedDate';
+  static const String requestType = 'requestType';
+  static const String returnRequestSubTitle = 'returnRequestSubTitle';
+
 
   // Checkout
   static const String checkOut = "checkOut";

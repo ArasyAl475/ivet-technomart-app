@@ -111,6 +111,7 @@ class English {
     TTexts.cartSubTitle: 'Add, remove products and move to checkout',
     TTexts.myOrders: 'My Orders',
     TTexts.ordersSubTitle: 'In-progress and Completed Orders',
+    TTexts.requestsSubTitle: 'In-progress and Completed Requests',
     TTexts.bankAccount: 'Bank Account',
     TTexts.bankAccountSubTitle: 'Withdraw balance to registered bank account',
     TTexts.myCoupons: 'My Coupons',
@@ -184,6 +185,11 @@ class English {
     TTexts.total: 'Total :',
     TTexts.paymentMethod: 'Payment Method:',
     TTexts.cashOnDelivery: 'Cash on Delivery',
+    TTexts.returnAndExchange: 'Return And Exchange',
+    TTexts.returnRequest: 'Return Request',
+    TTexts.requestedDate: 'Requested Date',
+    TTexts.requestType: 'Request Type',
+    TTexts.returnRequestSubTitle: 'Return Request Submitted Successfully',
 
     // CheckOut
     TTexts.checkOut: 'CheckOut',

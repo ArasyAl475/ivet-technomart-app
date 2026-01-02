@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tstore_ecommerce_app/features/personalization/models/user_model.dart';
 
 import '../../../features/authentication/screens/onboarding/onboarding.dart';
 import '../../../features/authentication/screens/signup/verify_email.dart';
@@ -45,23 +47,56 @@ class AuthenticationRepository extends GetxController {
 
   String get getPhoneNo => _firebaseUser.value?.phoneNumber ?? "";
 
+  bool get isUserLoggedIn => _firebaseUser.value != null;
+
+  bool get isGuestUser => deviceStorage.read('isGuestMode') ?? true;
+
   /// Called from main.dart on app launch
   @override
   void onReady() {
     _firebaseUser = Rx<User?>(_auth.currentUser);
     _firebaseUser.bindStream(_auth.userChanges());
     FlutterNativeSplash.remove();
-    screenRedirect(_firebaseUser.value);
+    screenRedirect();
   }
 
   /// Function to Show Relevant Screen
-  screenRedirect(User? user) async {
-    if (user != null) {
+  // screenRedirect(User? user) async {
+  //   if (user != null) {
+  //     // Fetch User Record
+  //     await UserController.instance.fetchUserRecord();
+  //
+  //     // Use this to check auth Role for admin
+  //     final idTokenResult = await _auth.currentUser!.getIdTokenResult();
+  //
+  //     // If email verified let the user go to Home Screen else to the Email Verification Screen
+  //     if (user.emailVerified || user.phoneNumber != null || idTokenResult.claims?['admin'] == true) {
+  //       // Initialize User Specific Storage
+  //       await TLocalStorage.init(user.uid);
+  //       Get.offAll(() => const HomeMenu());
+  //     } else {
+  //       Get.offAll(() => VerifyEmailScreen(email: getUserEmail));
+  //     }
+  //   } else {
+  //     // Local Storage: User is new or Logged out! If new then write isFirstTime Local storage variable = true.
+  //     deviceStorage.writeIfNull('isFirstTime', true);
+  //     deviceStorage.read('isFirstTime') != true ? Get.offAll(() => const WelcomeScreen()) : Get.offAll(() => const OnBoardingScreen());
+  //   }
+  // }
+
+  /// Function to Show Relevant Screen
+  screenRedirect() async {
+    // Check if user is logged in via Firebase
+    if (isUserLoggedIn) {
+      final user = _firebaseUser.value!; // We know user is not null here
+      // If a user is logged in, they are not a guest, so ensure guest mode is false
+      await deviceStorage.write('isGuestMode', false);
+
       // Fetch User Record
       await UserController.instance.fetchUserRecord();
 
       // Use this to check auth Role for admin
-      final idTokenResult = await _auth.currentUser!.getIdTokenResult();
+      final idTokenResult = await user.getIdTokenResult();
 
       // If email verified let the user go to Home Screen else to the Email Verification Screen
       if (user.emailVerified || user.phoneNumber != null || idTokenResult.claims?['admin'] == true) {
@@ -71,10 +106,23 @@ class AuthenticationRepository extends GetxController {
       } else {
         Get.offAll(() => VerifyEmailScreen(email: getUserEmail));
       }
-    } else {
-      // Local Storage: User is new or Logged out! If new then write isFirstTime Local storage variable = true.
-      deviceStorage.writeIfNull('isFirstTime', true);
-      deviceStorage.read('isFirstTime') != true ? Get.offAll(() => const WelcomeScreen()) : Get.offAll(() => const OnBoardingScreen());
+    }else {
+      // User is not logged in via Firebase. Check if they chose guest mode.
+      if (isGuestUser) {
+        // User is in Guest Mode, navigate to HomeMenu
+        Get.offAll(() => const HomeMenu());
+      } else {
+        // User is not logged in and not a guest.
+        // This is for new users or users who have logged out and not chosen guest mode.
+        deviceStorage.writeIfNull('isFirstTime', true);
+        // If it's their first time, show OnBoarding, otherwise WelcomeScreen.
+        bool isFirstTime = deviceStorage.read('isFirstTime') ?? true;
+        if (isFirstTime) {
+          Get.offAll(() => const OnBoardingScreen());
+        } else {
+          Get.offAll(() => const WelcomeScreen());
+        }
+      }
     }
   }
 
@@ -83,7 +131,11 @@ class AuthenticationRepository extends GetxController {
   /// [EmailAuthentication] - SignIn
   Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
-      return await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      // After successful login, ensure guest mode is off
+      await deviceStorage.write('isGuestMode', false);
+      // screenRedirect will handle the rest based on the logged-in user
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -100,7 +152,10 @@ class AuthenticationRepository extends GetxController {
   /// [EmailAuthentication] - REGISTER
   Future<UserCredential> registerWithEmailAndPassword(String email, String password) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      final userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      // After successful registration, ensure guest mode is off
+      await deviceStorage.write('isGuestMode', false);
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -184,7 +239,11 @@ class AuthenticationRepository extends GetxController {
       final credential = GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
 
       // Once signed in, return the UserCredential
-      return await FirebaseAuth.instance.signInWithCredential(credential);
+      final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential); // Assuming 'credential' is obtained
+      if (userCredential.user != null) {
+        await deviceStorage.write('isGuestMode', false);
+      }
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -234,7 +293,7 @@ class AuthenticationRepository extends GetxController {
           var signedInUser = await _auth.signInWithCredential(credential);
           isPhoneAutoVerified = signedInUser.user != null;
 
-          await screenRedirect(_auth.currentUser);
+          await screenRedirect();
         },
         codeAutoRetrievalTimeout: (verificationId) {
           // phoneNoVerificationId.value = verificationId;
@@ -260,7 +319,11 @@ class AuthenticationRepository extends GetxController {
     try {
       final phoneCredentials = PhoneAuthProvider.credential(verificationId: phoneNoVerificationId.value, smsCode: otp);
       var credentials = await _auth.signInWithCredential(phoneCredentials);
-      return credentials.user != null ? true : false;
+      if (credentials.user != null) {
+        await deviceStorage.write('isGuestMode', false);
+        return true;
+      }
+      return false;
     } on FirebaseAuthException catch (e) {
       await FirebaseCrashlytics.instance.recordError(e, e.stackTrace);
       throw TFirebaseAuthException(e.code).message;
@@ -286,7 +349,11 @@ class AuthenticationRepository extends GetxController {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
-      Get.offAll(() => const WelcomeScreen());
+      UserController.instance.user.value = UserModel.empty();
+      _firebaseUser.value = null;
+      await deviceStorage.write('isGuestMode', true);
+      await deviceStorage.write('isFirstTime', false);
+      screenRedirect();
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -316,5 +383,39 @@ class AuthenticationRepository extends GetxController {
     } catch (e) {
       throw TTexts.somethingWrongTryAgain.tr;
     }
+  }
+
+  /// Show a reusable "Sign In Required" popup for guest users.
+  /// [message] can be customized based on the action (default provided).
+  void showSignInRequiredPopup({String? message}) {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          'Sign In Required'.tr,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Text(
+          message ?? 'You need to sign in to continue using this feature.'.tr,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text('Cancel'.tr),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(100, 50),
+            ),
+            onPressed: () {
+              Get.back();
+              Get.toNamed(TRoutes.welcome);
+            },
+            child: Text('Sign In'.tr),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
   }
 }

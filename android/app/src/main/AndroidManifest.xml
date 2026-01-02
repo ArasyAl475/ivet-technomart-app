@@ -11,6 +11,19 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <queries>
+        <package android:name="go.jek.by.u2" />
+        <package android:name="id.or.id" />
+        <package android:name="com.telkom.mwallet" />
+        <package android:name="com.shopee.id" />
+        <package android:name="com.midtrans.gopay" />
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
     <application
         android:label="tstore_ecommerce_app"
         android:name="${applicationName}"
@@ -42,6 +55,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data
+            android:name="com.midtrans.clientKey"
+            android:value="Mid-client-FJs4yHvmubCWhTES" />
+        <meta-data
+            android:name="com.midtrans.merchantUrl"
+            android:value="https://us-central1-ivet-technomart.cloudfunctions.net/" />
 
     </application>
     <!-- Required to query activities that can process text, see:

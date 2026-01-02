@@ -7,6 +7,7 @@ import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 import '../../../controllers/product/order_controller.dart';
 import '../../../models/order_model.dart';
+import '../../return_request/create_return_request_screen.dart';
 import 'widgets/addresses.dart';
 import 'widgets/delivery_status.dart';
 import 'widgets/order_status.dart';
@@ -51,7 +52,9 @@ class OrderDetail extends StatelessWidget {
             DeliveryStatus(order: order),
             const SizedBox(height: TSizes.spaceBtwItems),
             if (order.orderStatus.name == OrderStatus.pending.name)
-              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.cancelOrder(order), child: const Text("Cancel Order")))
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => controller.cancelOrder(order), child: const Text("Cancel Order"))),
+            if(order.orderStatus.name == OrderStatus.delivered.name)
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () => Get.to(() =>  CreateReturnRequestScreen(order: order)), child: const Text("Return Order"))),
           ],
         ),
       ),

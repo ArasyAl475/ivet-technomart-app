@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -74,7 +73,7 @@ class SignInController extends GetxController {
         }
 
         // Redirect to the appropriate screen
-        await AuthenticationRepository.instance.screenRedirect(FirebaseAuth.instance.currentUser);
+        await AuthenticationRepository.instance.screenRedirect();
       } else {
         // Stop loading dialog
         TFullScreenLoader.stopLoading();

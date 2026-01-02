@@ -17,6 +17,8 @@ class TRoutes {
   static const category = '/category';
   static const order = '/order';
   static const orderDetail = '/orderDetail';
+  static const returnRequest = '/return-request';
+  static const returnRequestDetail = '/return-request-detail';
   static const checkout = '/checkout';
   static const cart = '/cart';
   static const brand = '/brand';
@@ -41,6 +43,7 @@ class TRoutes {
   // Chats
   static const chatList = '/chat-list';
   static const chat = '/chat';
+  static const whatsappSupport = '/whatsappSupport';
 
   //Notification
   static const notification = '/notification';

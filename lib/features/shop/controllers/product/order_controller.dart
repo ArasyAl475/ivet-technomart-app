@@ -6,6 +6,7 @@ import 'package:t_utils/utils/constants/enums.dart';
 
 import '../../../../common/widgets/success_screen/success_screen.dart';
 import '../../../../data/repositories/order/order_repository.dart';
+import '../../../../data/services/midtrans/midtrans_service.dart';
 import '../../../../data/services/notifications/notification_service.dart';
 import '../../../../data/services/stripe/stripe_service.dart';
 import '../../../../routes/routes.dart';
@@ -191,6 +192,18 @@ class OrderController extends GetxController {
         await processStripePayment(order);
       }
 
+      // 2. MIDTRANS
+      if (checkoutController.selectedPaymentMethod.value.paymentMethod == PaymentMethods.midtrans) {
+        // Await the boolean result
+        bool isPaymentSuccess = await processMidtransPayment(order);
+
+        // If payment failed or was cancelled
+        if (!isPaymentSuccess) {
+          TFullScreenLoader.stopLoading(); // Close the loading spinner
+          return; // STOP EXECUTION HERE. Do not clear cart, do not go to success screen.
+        }
+      }
+
       // Update coupon count if applied
       if (couponController.coupon.value.id.isNotEmpty) {
         couponController.updateUsageCount(couponController.coupon.value);
@@ -232,7 +245,7 @@ class OrderController extends GetxController {
       final code = e.error.code;
       final message = e.error.localizedMessage;
       TLoaders.errorSnackBar(title: 'Stripe: $code', message: message);
-    } catch (e) {
+    } on Exception catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title:TTexts.ohSnap.tr, message: e.toString());
     }
@@ -273,6 +286,31 @@ class OrderController extends GetxController {
       } else {
         _handlePaymentFailure(order.docId, paymentResult);
       }
+  }
+
+  /// New Method for Midtrans
+  Future<bool> processMidtransPayment(OrderModel order) async {
+    try {
+      final paymentResult = await TMidtransPaymentService.instance.processPayment(
+        amount: order.totalAmount,
+        orderId: order.docId,
+        userEmail: order.userEmail,
+        userName: order.userName,
+        userPhone: addressController.selectedAddress.value.phoneNumber,
+      );
+
+      // Midtrans is often async (Pending), so we might check for Succeeded or Pending
+      if (paymentResult['paymentStatus'] == 'Succeeded' || paymentResult['paymentStatus'] == 'Pending') {
+        await _updateOrderWithPaymentDetails(order.docId, paymentResult);
+        return true; // PAYMENT SUCCESS
+      } else {
+        await _handlePaymentFailure(order.docId, paymentResult);
+        return false; // PAYMENT FAILED/CANCELLED
+      }
+    } catch (e) {
+      TLoaders.errorSnackBar(title: TTexts.ohSnap.tr, message: e.toString());
+      return false; // EXCEPTION OCCURRED
+    }
   }
 
   /// Method for updating order with payment details

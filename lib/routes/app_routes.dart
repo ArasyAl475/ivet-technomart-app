@@ -17,7 +17,7 @@ import '../features/authentication/screens/signup/verify_email.dart';
 import '../features/authentication/screens/welcome/welcome_screen.dart';
 import '../features/chat/screens/chat/chat_screen.dart';
 import '../features/chat/screens/chat_list_screen/chat_list_screen.dart';
-import '../features/personalization/controllers/language_controller.dart';
+import '../features/chat/screens/whatsapp_support/whatsapp_support_list_screen.dart';
 import '../features/personalization/screens/address/add_new_address.dart';
 import '../features/personalization/screens/address/address.dart';
 import '../features/personalization/screens/language/language_screen.dart';
@@ -32,6 +32,7 @@ import '../features/shop/screens/favourites/favourite.dart';
 import '../features/shop/screens/home/home.dart';
 import '../features/shop/screens/order/order.dart';
 import '../features/shop/screens/order/order_detail/order_detail_screen.dart';
+import '../features/shop/screens/return_request/return_request_screen.dart';
 import '../features/shop/screens/search/search.dart';
 import '../features/shop/screens/store/store.dart';
 import '../home_menu.dart';
@@ -63,6 +64,7 @@ class AppRoutes {
     GetPage(name: TRoutes.verifyPin, page: () => const VerifyPinScreen()),
     GetPage(name: TRoutes.updatePin, page: () => const UpdatePinScreen()),
     GetPage(name: TRoutes.otpVerification, page: () => const OtpScreen()),
+    GetPage(name: TRoutes.returnRequest, page: () => const ReturnRequestScreen()),
 
     GetPage(name: TRoutes.coupon, page: () => const CouponScreen(), binding: CouponBinding(), transition: Transition.fade),
 
@@ -71,19 +73,10 @@ class AppRoutes {
     /// Chats
     GetPage(name: TRoutes.chatList, page: () => const ChatListScreen()),
     GetPage(name: TRoutes.chat, page: () => ChatScreen()),
+    GetPage(name: TRoutes.whatsappSupport, page: () => WhatsappSupportListScreen()),
 
-    GetPage(
-      name: TRoutes.notification,
-      page: () => const NotificationScreen(),
-      binding: NotificationBinding(),
-      transition: Transition.fade,
-    ),
-    GetPage(
-      name: TRoutes.notificationDetails,
-      page: () => const NotificationDetailScreen(),
-      binding: NotificationBinding(),
-      transition: Transition.fade,
-    ),
+    GetPage(name: TRoutes.notification, page: () => const NotificationScreen(), binding: NotificationBinding(), transition: Transition.fade),
+    GetPage(name: TRoutes.notificationDetails, page: () => const NotificationDetailScreen(), binding: NotificationBinding(), transition: Transition.fade),
     GetPage(name: TRoutes.language, page: () => const LanguageScreen()),
   ];
 }

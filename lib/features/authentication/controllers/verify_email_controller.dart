@@ -47,7 +47,7 @@ class VerifyEmailController extends GetxController {
               image: TImages.successfullyRegisterAnimation,
               title: TTexts.yourAccountCreatedTitle,
               subTitle: TTexts.yourAccountCreatedSubTitle,
-              onPressed: () => AuthenticationRepository.instance.screenRedirect(FirebaseAuth.instance.currentUser),
+              onPressed: () => AuthenticationRepository.instance.screenRedirect(),
             ),
           );
         }
@@ -64,7 +64,7 @@ class VerifyEmailController extends GetxController {
           image: TImages.successfullyRegisterAnimation,
           title: TTexts.yourAccountCreatedTitle,
           subTitle: TTexts.yourAccountCreatedSubTitle,
-          onPressed: () => AuthenticationRepository.instance.screenRedirect(FirebaseAuth.instance.currentUser),
+          onPressed: () => AuthenticationRepository.instance.screenRedirect(),
         ),
       );
     }

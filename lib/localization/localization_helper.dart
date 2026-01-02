@@ -44,6 +44,8 @@ class TLocalizationHelper extends GetxController {
       Get.updateLocale(const Locale('es', 'ES'));
     } else if (value == TTexts.russian) {
       Get.updateLocale(const Locale('ru', 'RU'));
+    }else if (value == TTexts.indonesian) {
+      Get.updateLocale(const Locale('id', 'ID')); // ✅ ADDED
     }
   }
 }

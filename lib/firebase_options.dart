@@ -47,35 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA9L4xXXnXwPa62ioA2LShQ-0RdAcbeotc',
-    appId: '1:823307041176:web:ddaf3c80339832920653ed',
-    messagingSenderId: '823307041176',
-    projectId: 'codingwitht-c6d0f',
-    authDomain: 'codingwitht-c6d0f.firebaseapp.com',
-    databaseURL: 'https://codingwitht-c6d0f-default-rtdb.firebaseio.com',
-    storageBucket: 'codingwitht-c6d0f.appspot.com',
-    measurementId: 'G-GPNQNEKECP',
+    apiKey: 'AIzaSyDJCPVMhHMu2lH-IPBBzWFSmKnD-oWrDDU',
+    appId: '1:804339776474:web:8ef2a60d1defbcd2b71ee3',
+    messagingSenderId: '804339776474',
+    projectId: 'ivet-technomart',
+    authDomain: 'ivet-technomart.firebaseapp.com',
+    storageBucket: 'ivet-technomart.firebasestorage.app',
+    measurementId: 'G-11YPJBJY5G',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAdRjw0tdFdERdPZDoMagTbxPhSg368Zic',
-    appId: '1:823307041176:android:bdbb6bd4b939233c0653ed',
-    messagingSenderId: '823307041176',
-    projectId: 'codingwitht-c6d0f',
-    databaseURL: 'https://codingwitht-c6d0f-default-rtdb.firebaseio.com',
-    storageBucket: 'codingwitht-c6d0f.appspot.com',
+    apiKey: 'AIzaSyC2ihu0v541-I_kfEWxXye69kDT6Zq0O6A',
+    appId: '1:804339776474:android:00692e5a05358b0db71ee3',
+    messagingSenderId: '804339776474',
+    projectId: 'ivet-technomart',
+    storageBucket: 'ivet-technomart.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDyypc4MyqBBneptEWpF17u3s7cu8X4wIY',
-    appId: '1:823307041176:ios:1f058d1315b40a200653ed',
-    messagingSenderId: '823307041176',
-    projectId: 'codingwitht-c6d0f',
-    databaseURL: 'https://codingwitht-c6d0f-default-rtdb.firebaseio.com',
-    storageBucket: 'codingwitht-c6d0f.appspot.com',
-    androidClientId: '823307041176-7poer762581l32htlu5g854916r6gfd4.apps.googleusercontent.com',
-    iosClientId: '823307041176-ptmfhrihuhr9uh7mia7920n9qffpag3q.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDSrRk0jQVJvy9SHI9Fe8ES5-SuOeGMiHc',
+    appId: '1:804339776474:ios:59212709b7eb5d78b71ee3',
+    messagingSenderId: '804339776474',
+    projectId: 'ivet-technomart',
+    storageBucket: 'ivet-technomart.firebasestorage.app',
     iosBundleId: 'com.codingwitht.ecommerce.tstoreEcommerceApp',
   );
-
 }

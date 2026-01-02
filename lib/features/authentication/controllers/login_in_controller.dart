@@ -68,7 +68,7 @@ class LoginController extends GetxController {
       TFullScreenLoader.stopLoading();
 
       // Redirect
-      await AuthenticationRepository.instance.screenRedirect(userCredentials.user);
+      await AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: TTexts.ohSnap.tr, message: e.toString());
@@ -100,7 +100,7 @@ class LoginController extends GetxController {
       TFullScreenLoader.stopLoading();
 
       // Redirect
-      await AuthenticationRepository.instance.screenRedirect(userCredentials?.user);
+      await AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
       TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: TTexts.ohSnap.tr, message: e.toString());

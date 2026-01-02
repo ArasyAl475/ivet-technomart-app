@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../features/shop/controllers/product/product_controller.dart';
 import '../../../../../features/shop/models/product_model.dart';
 import '../../../../../utils/constants/enums.dart';

@@ -58,19 +58,31 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
         leading:
             showBackArrow
                 ? IconButton(
-                  onPressed: () => Get.back(result: true),
+                  onPressed: () {
+                    if (Get.isSnackbarOpen) {
+                      Get.closeCurrentSnackbar();
+                    }
+                    Get.back(result: true);
+                  },
                   icon: Icon(Iconsax.arrow_left_24, color: dark ? TColors.light : TColors.dark),
                 )
                 : leadingIcon != null
-                ? IconButton(onPressed: leadingOnPressed, icon: Icon(leadingIcon, color: dark ? TColors.light : TColors.dark))
+                ? IconButton(
+                  onPressed: leadingOnPressed,
+                  icon: Icon(leadingIcon, color: dark ? TColors.light : TColors.dark),
+                )
                 : null,
+
         title: title,
         actions:
             showSkipButton
                 ? [
                   OutlinedButton(
                     onPressed: () => Get.toNamed(TRoutes.navigation),
-                    style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(6), textStyle: Theme.of(context).textTheme.bodySmall),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.all(6),
+                      textStyle: Theme.of(context).textTheme.bodySmall,
+                    ),
                     child: const Text(TTexts.skip),
                   ),
                 ]
@@ -83,14 +95,18 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
                             position: badges.BadgePosition.topEnd(top: 0, end: 0),
                             badgeStyle: const badges.BadgeStyle(badgeColor: TColors.primary),
                             badgeContent: Obx(
-                              () => Text(controller.cartItems.length.toString(), style: const TextStyle(color: Colors.white)),
+                              () =>
+                                  Text(controller.cartItems.length.toString(), style: const TextStyle(color: Colors.white)),
                             ),
                             child: IconButton(
                               onPressed: actionOnPressed,
                               icon: Icon(actionIcon, color: dark ? TColors.light : TColors.dark),
                             ),
                           )
-                          : IconButton(onPressed: actionOnPressed, icon: Icon(actionIcon, color: dark ? TColors.light : TColors.dark)),
+                          : IconButton(
+                            onPressed: actionOnPressed,
+                            icon: Icon(actionIcon, color: dark ? TColors.light : TColors.dark),
+                          ),
                     ]
                 : null,
       ),

@@ -29,7 +29,7 @@ enum ShippingStatus { pending, inTransit, delivered, canceled }
 
 enum MediaCategory { none, banners, brands, categories, products, personalized }
 
-enum PaymentMethods { cash, card, paypal }
+enum PaymentMethods { cash, card, paypal, midtrans }
 
 enum BannerTargetType {
   none,
@@ -78,3 +78,31 @@ enum UnitType {
   illumination, // e.g., lux, foot-candles
   torque, // e.g., newton-meters, pound-feet
 }
+
+enum ReturnStatus {
+  requested,
+  underReview,
+  approved,
+  rejected,
+  refundProcessed,
+  exchangeProcessed,
+  completed,
+  canceled,
+}
+
+enum ReturnType {
+  returnForRefund,
+  exchange,
+  returnAndExchange
+}
+
+enum ReturnReason {
+  damagedProduct,
+  wrongItem,
+  sizeIssue,
+  qualityIssue,
+  notAsDescribed,
+  changedMind,
+  other
+}
+

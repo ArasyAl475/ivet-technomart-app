@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tstore_ecommerce_app/data/repositories/authentication/authentication_repository.dart';
 
 import '../../../../utils/constants/enums.dart';
 import '../../../../utils/constants/text_strings.dart';
@@ -17,9 +18,13 @@ class CartController extends GetxController {
   RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   RxBool loading = false.obs;
   final variationController = VariationController.instance;
+  final AuthenticationRepository authRepo = AuthenticationRepository.instance;
+
 
   CartController() {
-    loadCartItems();
+    if (!authRepo.isGuestUser) {
+      loadCartItems();
+    }
   }
 
   /// This function converts a ProductModel to a CartItemModel
@@ -57,6 +62,13 @@ class CartController extends GetxController {
   }
 
   void addToCart(ProductModel product) {
+
+    // If user is guest, show sign-in prompt and return
+    if (authRepo.isGuestUser) {
+      authRepo.showSignInRequiredPopup();
+      return;
+    }
+
     // Variation Selected?
     if (product.productType.name == ProductType.variable.name && variationController.selectedVariation.value.id.isEmpty) {
       TLoaders.customToast(message: TTexts.selectVariations.tr);
@@ -97,6 +109,13 @@ class CartController extends GetxController {
   }
 
   void addOneToCart(CartItemModel item) {
+
+    // If user is guest, show sign-in prompt and return
+    if (authRepo.isGuestUser) {
+      authRepo.showSignInRequiredPopup();
+      return;
+    }
+
     int index = cartItems.indexWhere(
       (cartItem) => cartItem.productId == item.productId && cartItem.variationId == item.variationId,
     );
