@@ -28,7 +28,6 @@ class GeneralBindings extends Bindings {
     Get.lazyPut(() => SettingsController(), fenix: true);
     Get.lazyPut(() => VariationController());
     Get.lazyPut(() => CouponController());
-    Get.lazyPut(() => UserController());
     Get.lazyPut(() => OTPController());
     Get.put(TNotificationService());
     Get.put(LanguageController());

@@ -23,7 +23,7 @@ class ReviewController extends GetxController {
 
   RxInt rating = 0.obs;
   var reviewText = ''.obs;
-  final userController = Get.put(UserController());
+  final userController = UserController.instance;
 
   void updateReviewText(String text) {
     reviewText.value = text;

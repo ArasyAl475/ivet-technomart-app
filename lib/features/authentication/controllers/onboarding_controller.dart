@@ -28,7 +28,6 @@ class OnBoardingController extends GetxController {
 
       final userStorage = GetStorage();
       userStorage.write('isFirstTime', false);
-
       Get.to(() => const WelcomeScreen());
     } else {
       int page = currentPageIndex.value + 1;

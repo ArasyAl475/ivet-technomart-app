@@ -2,8 +2,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../data/repositories/authentication/authentication_repository.dart';
+import '../../../../home_menu.dart';
 import '../../../../routes/routes.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
@@ -18,7 +21,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
-    // final dark = THelperFunctions.isDarkMode(context);
+    final dark = THelperFunctions.isDarkMode(context);
     final screenWidth = THelperFunctions.screenWidth();
 
     return Scaffold(
@@ -48,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
                 child: Text(
                   TTexts.welcomeToStore.tr,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w700),
+                  style: Theme.of(context).textTheme.headlineLarge?.copyWith(fontWeight: FontWeight.w700, color: dark ? TColors.darkerGrey : TColors.light),
                 ),
               ),
 
@@ -77,7 +80,9 @@ class WelcomeScreen extends StatelessWidget {
                         child: ElevatedButton.icon(
                           icon: const Icon(Icons.email_outlined, size: 28, color: Colors.white),
                           onPressed: () => Get.toNamed(TRoutes.logIn, arguments: 'EmailPassword'),
-                          label: Text(TTexts.loginWithEmailPass.tr,),
+                          label: Text(
+                            TTexts.loginWithEmailPass.tr,
+                          ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: TColors.primary,
                             foregroundColor: Colors.white,
@@ -120,6 +125,29 @@ class WelcomeScreen extends StatelessWidget {
                           ),
                           onPressed: () => controller.googleSignIn(),
                           label: Text(TTexts.signInWithGoogle.tr),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            side: const BorderSide(color: TColors.primary),
+                            foregroundColor: TColors.primary,
+                            textStyle: const TextStyle(fontSize: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: TSizes.spaceBtwItems),
+
+                      /// -- Sign-in as guest
+                      SizedBox(
+                        width: screenWidth * 0.8,
+                        child: OutlinedButton.icon(
+                          icon: Icon(Iconsax.user),
+                          onPressed: () async {
+                            await AuthenticationRepository.instance.deviceStorage.write('isGuestMode', true);
+                            Get.offAll(() => const HomeMenu());
+                          },
+                          label: Text(TTexts.signInAsGuest.tr),
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             side: const BorderSide(color: TColors.primary),

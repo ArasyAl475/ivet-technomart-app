@@ -22,7 +22,7 @@ import 'settings_controller.dart';
 
 /// Controller to manage user-related functionality.
 class UserController extends GetxController {
-  static UserController get instance => Get.find();
+  static UserController get instance => Get.isRegistered() ? Get.find() : Get.put(UserController());
 
   Rx<UserModel> user = UserModel.empty().obs;
   final imageUploading = false.obs;
@@ -45,6 +45,7 @@ class UserController extends GetxController {
   /// Fetch user record
   Future<void> fetchUserRecord({bool fetchLatestRecord = false}) async {
     try {
+      if (AuthenticationRepository.instance.deviceStorage.read('isGuestMode') == true) return;
       if (fetchLatestRecord) {
         profileLoading.value = true;
         final user = await userRepository.fetchUserDetails();

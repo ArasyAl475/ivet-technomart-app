@@ -19,7 +19,7 @@ class THomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     // Just to create instance and fetch values
     Get.put(SettingsController());
-    final userController = Get.put(UserController());
+    final userController = UserController.instance;
 
     return TAppBar(
       title: GestureDetector(

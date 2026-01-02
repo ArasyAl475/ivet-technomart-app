@@ -49,7 +49,7 @@ class AuthenticationRepository extends GetxController {
 
   bool get isUserLoggedIn => _firebaseUser.value != null;
 
-  bool get isGuestUser => deviceStorage.read('isGuestMode') ?? true;
+  bool get isGuestUser => deviceStorage.read('isGuestMode') ?? false;
 
   /// Called from main.dart on app launch
   @override
@@ -85,7 +85,7 @@ class AuthenticationRepository extends GetxController {
   // }
 
   /// Function to Show Relevant Screen
-  screenRedirect() async {
+  Future<void> screenRedirect() async {
     // Check if user is logged in via Firebase
     if (isUserLoggedIn) {
       final user = _firebaseUser.value!; // We know user is not null here
@@ -108,10 +108,10 @@ class AuthenticationRepository extends GetxController {
       }
     }else {
       // User is not logged in via Firebase. Check if they chose guest mode.
-      if (isGuestUser) {
-        // User is in Guest Mode, navigate to HomeMenu
-        Get.offAll(() => const HomeMenu());
-      } else {
+      // if (isGuestUser) {
+      //   // User is in Guest Mode, navigate to HomeMenu
+      //   Get.offAll(() => const HomeMenu());
+      // } else {
         // User is not logged in and not a guest.
         // This is for new users or users who have logged out and not chosen guest mode.
         deviceStorage.writeIfNull('isFirstTime', true);
@@ -122,7 +122,7 @@ class AuthenticationRepository extends GetxController {
         } else {
           Get.offAll(() => const WelcomeScreen());
         }
-      }
+      // }
     }
   }
 

@@ -18,6 +18,7 @@ class Vietnamese {
     TTexts.loginWithEmailPass: 'Đăng nhập bằng Email & Mật khẩu',
     TTexts.loginWithPhoneNo: 'Đăng nhập bằng Số điện thoại',
     TTexts.signInWithGoogle: 'Đăng nhập bằng Google',
+    TTexts.signInAsGuest: 'đăng nhập với tư cách khách',
     TTexts.haveAnAccount: "Chưa có tài khoản?",
     TTexts.signUp: 'Đăng ký',
 

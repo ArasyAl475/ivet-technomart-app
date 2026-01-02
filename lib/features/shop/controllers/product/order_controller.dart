@@ -46,7 +46,7 @@ class OrderController extends GetxController {
   final checkoutController = Get.put(CheckoutController());
   final couponController = Get.put(CouponController());
   final orderRepository = Get.put(OrderRepository());
-  final userController = Get.put(UserController());
+  final userController = UserController.instance;
   final settingController = Get.put(SettingsController());
 
   @override

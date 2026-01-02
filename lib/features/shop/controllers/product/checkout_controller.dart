@@ -21,7 +21,7 @@ class CheckoutController extends GetxController {
   //final couponController = CouponController.instance;
   final couponController = Get.put(CouponController());
   final settingsController = SettingsController.instance;
-  final userController = Get.put(UserController());
+  final userController = UserController.instance;
 
   RxDouble couponDiscountAmount = 0.0.obs;
   RxDouble pointsDiscountAmount = 0.0.obs;

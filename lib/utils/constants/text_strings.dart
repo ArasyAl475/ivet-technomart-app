@@ -17,6 +17,7 @@ class TTexts {
   static const String loginWithEmailPass = "loginWithEmailPass";
   static const String loginWithPhoneNo = "loginWithPhoneNo";
   static const String signInWithGoogle = "signInWithGoogle";
+  static const String signInAsGuest = "Sign In As Guest";
   static const String haveAnAccount = "haveAnAccount";
   static const String signUp = "signUp";
 

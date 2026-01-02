@@ -82,7 +82,7 @@ class SignupController extends GetxController {
         orderCount: 0,
       );
 
-      final userController = Get.put(UserController());
+      final userController = UserController.instance;
       await userController.saveUserRecord(user: newUser);
 
       // Remove Loader
@@ -91,6 +91,9 @@ class SignupController extends GetxController {
       // Show Success Message
       TLoaders.successSnackBar(
           title: TTexts.congratulation.tr, message: TTexts.congratulationMessage.tr);
+
+      // After successful registration, ensure guest mode is off
+      await AuthenticationRepository.instance.deviceStorage.write('isGuestMode', false);
 
       // Move to Verify Email Screen
       Get.to(() => const VerifyEmailScreen());

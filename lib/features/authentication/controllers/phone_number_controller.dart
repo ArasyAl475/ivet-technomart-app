@@ -125,7 +125,7 @@ class SignInController extends GetxController {
       verificationStatus: VerificationStatus.approved,
     );
 
-    final userController = Get.put(UserController());
+    final userController = UserController.instance;
     await userController.saveUserRecord(user: newUser);
   }
 }

@@ -59,7 +59,7 @@ class LoginController extends GetxController {
       final userCredentials = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
       final token = await TNotificationService.getToken();
-      final userController = Get.put(UserController());
+      final userController = UserController.instance;
       await userController.updateUserRecordWithToken(token);
       // Assign user data to RxUser of UserController to use in app
       await userController.fetchUserRecord();
@@ -91,7 +91,7 @@ class LoginController extends GetxController {
       // Google Authentication
       final userCredentials = await AuthenticationRepository.instance.signInWithGoogle();
 
-      final userController = Get.put(UserController());
+      final userController = UserController.instance;
 
       // Save Authenticated user data in the Firebase Firestore
       await userController.saveUserRecord(userCredentials: userCredentials);
