@@ -14,7 +14,7 @@ class DefaultSectionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = LanguageController.instance;
     final defaultLanguage = controller.allLanguages.firstWhere(
-          (lang) => lang['code'] == 'fr', // French is default
+          (lang) => lang['code'] == 'id_ID', // French is default
       orElse: () => controller.allLanguages.first,
     );
 
@@ -34,9 +34,9 @@ class DefaultSectionWidget extends StatelessWidget {
                 showActionButton: false,
               ),
               LanguageCard(
-                languageName: "French",
-                languageCode: "fr",
-                flagAsset: TImages.french,
+                languageName: "Indonesian",
+                languageCode: "id_ID",
+                flagAsset: TImages.indonesia,
               ),
             ],
           ),

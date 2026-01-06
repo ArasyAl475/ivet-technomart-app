@@ -22,6 +22,7 @@ class TImages {
   static const String spain = "assets/language/spain.png";
   static const String vietnam = "assets/language/vietnamese.png";
   static const String portugal = "assets/language/portugal.jpg";
+  static const String indonesia = "assets/language/indonesia.jpg";
 
   // -- Category Icons
   static const String sportIcon = "assets/icons/categories/icons8-bowling-64.png";

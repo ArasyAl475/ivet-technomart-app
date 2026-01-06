@@ -20,6 +20,7 @@ class LanguageController extends GetxController {
     {'name': 'Russian', 'code': 'ru', 'flag': TImages.russia},
     {'name': 'Spanish', 'code': 'es', 'flag': TImages.spain},
     {'name': 'Vietnamese', 'code': 'vi', 'flag': TImages.vietnam},
+    {'name': 'Indonesian', 'code': 'id_ID', 'flag': TImages.indonesia},
   ];
 
   @override
