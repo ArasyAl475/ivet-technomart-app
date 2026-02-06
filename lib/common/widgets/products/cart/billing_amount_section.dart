@@ -63,7 +63,7 @@ class TBillingAmountSection extends StatelessWidget {
           Row(
             children: [
               Expanded(child: Text('Subtotal', style: Theme.of(context).textTheme.bodyMedium)),
-              Text('\$${subTotal.toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodyMedium),
+              Text('Rp ${subTotal.toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodyMedium),
             ],
           ),
           const SizedBox(height: TSizes.spaceBtwItems / 2),
@@ -74,7 +74,7 @@ class TBillingAmountSection extends StatelessWidget {
               children: [
                 Expanded(child: Text('Shipping Fee', style: Theme.of(context).textTheme.bodyMedium)),
                 Obx(
-                  () => Text('\$${controller.isShippingFree(subTotal) ? 'Free' : (controller.getShippingCost(subTotal)).toStringAsFixed(2)}',
+                  () => Text('Rp ${controller.isShippingFree(subTotal) ? 'Free' : (controller.getShippingCost(subTotal)).toStringAsFixed(2)}',
                       style: Theme.of(context).textTheme.labelLarge),
                 ),
               ],
@@ -86,7 +86,7 @@ class TBillingAmountSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Tax Fee', style: Theme.of(context).textTheme.bodyMedium),
-                Text('\$${controller.getTaxAmount(subTotal).toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodyMedium),
+                Text('Rp ${controller.getTaxAmount(subTotal).toStringAsFixed(2)}', style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),
@@ -140,7 +140,7 @@ class TBillingAmountSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Order Total', style: Theme.of(context).textTheme.titleMedium),
-              Obx(() => Text('\$${controller.calculateGrandTotal(subTotal).toStringAsFixed(2)}', style: Theme.of(context).textTheme.titleMedium)),
+              Obx(() => Text('Rp ${controller.calculateGrandTotal(subTotal).toStringAsFixed(2)}', style: Theme.of(context).textTheme.titleMedium)),
             ],
           ),
         ],

@@ -12,7 +12,20 @@
           "package_name": "com.codingwitht.ecommerce.tstore_ecommerce_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "804339776474-ruva5natmcbguhlt17j2rq8epeb0qmj3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.codingwitht.ecommerce.tstore_ecommerce_app",
+            "certificate_hash": "3d8c11c6e7d3670940ce9779560eab853a83f481"
+          }
+        },
+        {
+          "client_id": "804339776474-lccad4oh6ci5kqrin2faciojaatl553o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC2ihu0v541-I_kfEWxXye69kDT6Zq0O6A"
@@ -20,7 +33,55 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804339776474-lccad4oh6ci5kqrin2faciojaatl553o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804339776474-n22n0s8v51l0eamsk5rpmss93gp5tt01.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cwtEcommerceAdminPanel"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804339776474:android:dd21224d100a47e4b71ee3",
+        "android_client_info": {
+          "package_name": "com.example.cwt_ecommerce_admin_panel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804339776474-lccad4oh6ci5kqrin2faciojaatl553o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2ihu0v541-I_kfEWxXye69kDT6Zq0O6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804339776474-lccad4oh6ci5kqrin2faciojaatl553o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "804339776474-n22n0s8v51l0eamsk5rpmss93gp5tt01.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cwtEcommerceAdminPanel"
+              }
+            }
+          ]
         }
       }
     }

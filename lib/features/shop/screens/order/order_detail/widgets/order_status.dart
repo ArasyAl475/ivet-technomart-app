@@ -46,7 +46,7 @@ class OrderStatusWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(TTexts.grandTotal.tr, style: Theme.of(context).textTheme.bodyLarge),
-            Text('\$${order.totalAmount}', style: Theme.of(context).textTheme.titleSmall),
+            Text('Rp ${order.totalAmount}', style: Theme.of(context).textTheme.titleSmall),
           ],
         ),
         const SizedBox(height: TSizes.xs),
